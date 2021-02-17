@@ -2,8 +2,10 @@ import VueRouter from "vue-router";
 import Vue from "vue";
 
 import Top from "./pages/Top.vue";
+import System from "./pages/System.vue"
 import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
+import RoomCreate from "./pages/RoomCreate.vue";
 import MyPageTop from "./pages/MyPage/MyPageTop.vue";
 import Profile from "./pages/MyPage/Profile.vue";
 import Setting from "./pages/MyPage/Setting.vue";
@@ -22,6 +24,10 @@ const routes = [
         component: Top
     },
     {
+        path: "/500",
+        component: System
+    },
+    {
         path: "/login",
         component: Login
     },
@@ -30,7 +36,11 @@ const routes = [
         component: Register
     },
     {
-        path: "/:name",
+        path: "/room.create",
+        component: RoomCreate
+    },
+    {
+        path: "/:roomname",
         component: MyPageTop,
         name: "myPageTop",
         children: [
