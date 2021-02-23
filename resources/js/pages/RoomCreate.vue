@@ -25,9 +25,10 @@ export default {
             const response = await axios
                 .post("api/room.create", data)
                 .catch(err => err.response || err);
-                console.log(response)
+
             if (response.status === CREATED) {
                 const name = this.roomFormData.name;
+                this.$store.commit("auth/setRoomName", name);
                 this.$router.push(`/${name}`);
             }
         }

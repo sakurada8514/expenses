@@ -17,4 +17,7 @@ use Illuminate\Http\Request;
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/room.create', 'RoomController@create')->name('room.create');
-Route::get('/user', 'UserController@userCheck')->name('user_check');
+Route::get('/user', 'UserController@userCheck')->name('user.check');
+
+Route::post('/expense/create', 'ExpenseController@create')->name('expenses.create');
+Route::get('/expense/categories', 'ExpenseController@readCategory')->name('expenses.categories.read');

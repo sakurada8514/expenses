@@ -2,9 +2,15 @@ import axios from "axios";
 import { OK, UNPROCESSABLE_ENTITY, CREATED } from "../util";
 const state = {
     user: null,
+    roomName: null,
     apiStatus: null,
     registerErrorMessage: null,
-    loginErrorMessage: null,
+    loginErrorMessage: null
+};
+
+const getters = {
+    check: state => !!state.user,
+    roomName: state => (state.roomName ? state.roomName : "")
 };
 
 const mutations = {
@@ -19,6 +25,9 @@ const mutations = {
     },
     setLoginErrorMessage(state, message) {
         state.loginErrorMessage = message;
+    },
+    setRoomName(state, name) {
+        state.roomName = name;
     }
 };
 
@@ -29,10 +38,10 @@ const actions = {
             .post("api/register", data)
             .catch(err => err.response || err);
 
-        if(response.status === OK) {
+        if (response.status === OK) {
             context.commit("setApiStatus", true);
-            context.commit("setUser", response.data.user)
-            return
+            context.commit("setUser", response.data.user);
+            return;
         }
 
         context.commit("setApiStatus", false);
@@ -50,10 +59,10 @@ const actions = {
             .post("api/login", data)
             .catch(err => err.response || err);
 
-        if(response.status === OK) {
+        if (response.status === OK) {
             context.commit("setApiStatus", true);
-            context.commit("setUser", response.data.user)
-            return
+            context.commit("setUser", response.data.user);
+            return;
         }
 
         context.commit("setApiStatus", false);
@@ -72,8 +81,10 @@ const actions = {
 
         //通信成功したらユーザー情報と日記情報をセット
         if (response.status === OK) {
-            const user = response.data || null;
+            const user = response.data.user || null;
+            const roomName = response.data.roomName;
             context.commit("setUser", user);
+            context.commit("setRoomName", roomName);
             return;
         }
 
@@ -86,5 +97,6 @@ export default {
     namespaced: true,
     state,
     mutations,
-    actions
-}
+    actions,
+    getters
+};

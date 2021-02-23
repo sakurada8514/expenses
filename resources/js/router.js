@@ -1,8 +1,9 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
+import store from "./store";
 
 import Top from "./pages/Top.vue";
-import System from "./pages/System.vue"
+import System from "./pages/System.vue";
 import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
 import RoomCreate from "./pages/RoomCreate.vue";
@@ -15,13 +16,25 @@ import ShoppingList from "./pages/MyPage/TodoPage/ShoppingList.vue";
 import ExpensesTop from "./pages/MyPage/expenses/ExpensesTop.vue";
 import ExpensesList from "./pages/MyPage/expenses/ExpensesList.vue";
 import ExpensesChart from "./pages/MyPage/expenses/ExpensesChart.vue";
+import ExpensesCreate from "./pages/MyPage/expenses/expensesCreate.vue";
+import { isEmpty } from "lodash";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: "/",
-        component: Top
+        component: Top,
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/roomName"]) {
+                const roomName = store.getters["auth/roomName"];
+                next(`/${roomName}`);
+            } else if (store.getters["auth/check"] && !store.getters["auth/roomName"]) {
+                next("/room.create");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: "/500",
@@ -29,15 +42,43 @@ const routes = [
     },
     {
         path: "/login",
-        component: Login
+        component: Login,
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/roomName"]) {
+                const roomName = store.getters["auth/roomName"];
+                next(`/${roomName}`);
+            } else if (store.getters["auth/check"] && !store.getters["auth/roomName"]) {
+                next("/room.create");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: "/register",
-        component: Register
+        component: Register,
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/roomName"]) {
+                const roomName = store.getters["auth/roomName"];
+                next(`/${roomName}`);
+            } else if (store.getters["auth/check"] && !store.getters["auth/roomName"]) {
+                next("/room.create");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: "/room.create",
-        component: RoomCreate
+        component: RoomCreate,
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/roomName"]) {
+                const roomName = store.getters["auth/roomName"];
+                next(`/${roomName}`);
+            } else {
+                next();
+            }
+        }
     },
     {
         path: "/:roomname",
@@ -53,6 +94,11 @@ const routes = [
                 path: "setting",
                 component: Setting,
                 name: "setting"
+            },
+            {
+                path: "expensesCreate",
+                component: ExpensesCreate,
+                name: "expensesCreate"
             },
             {
                 path: "todo",
@@ -88,7 +134,14 @@ const routes = [
                     }
                 ]
             }
-        ]
+        ],
+        beforeEnter(to, from, next) {
+            if (store.getters["auth/check"] && store.getters["auth/roomName"]) {
+                next();
+            } else {
+                next("/");
+            }
+        }
     }
 ];
 

@@ -37,8 +37,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rooms()
+    public function room()
     {
-        $this->belongsTo('App\Room');
+        $this->belongsTo(Room::class);
     }
 }
