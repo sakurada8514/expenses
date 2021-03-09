@@ -12,12 +12,15 @@ import Profile from "./pages/MyPage/Profile.vue";
 import Setting from "./pages/MyPage/Setting.vue";
 import TodoTop from "./pages/MyPage/TodoPage/TodoTop.vue";
 import TodoList from "./pages/MyPage/TodoPage/TodoList.vue";
+import TodoCreate from "./pages/MyPage/TodoPage/TodoCreate.vue";
+import TodoDetail from "./pages/MyPage/TodoPage/TodoDetail.vue";
 import ShoppingList from "./pages/MyPage/TodoPage/ShoppingList.vue";
 import ExpensesTop from "./pages/MyPage/expenses/ExpensesTop.vue";
 import ExpensesList from "./pages/MyPage/expenses/ExpensesList.vue";
 import ExpensesChart from "./pages/MyPage/expenses/ExpensesChart.vue";
-import ExpensesCreate from "./pages/MyPage/expenses/expensesCreate.vue";
-import { isEmpty } from "lodash";
+import ExpensesCreate from "./pages/MyPage/expenses/ExpensesCreate.vue";
+import ExpensesEdit from "./pages/MyPage/expenses/ExpensesEdit.vue";
+import ExpensesDetail from "./pages/MyPage/expenses/ExpenseDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -101,6 +104,16 @@ const routes = [
                 name: "expensesCreate"
             },
             {
+                path: "expensesEdit/:id",
+                component: ExpensesEdit,
+                name: "expensesEdit"
+            },
+            {
+                path: "todoCreate",
+                component: TodoCreate,
+                name: "todoCreate"
+            },
+            {
                 path: "todo",
                 component: TodoTop,
                 name: "todo",
@@ -118,6 +131,11 @@ const routes = [
                 ]
             },
             {
+                path: "todo/:id",
+                name: "todoDetail",
+                component: TodoDetail
+            },
+            {
                 path: "expenses",
                 name: "expenses",
                 component: ExpensesTop,
@@ -133,6 +151,11 @@ const routes = [
                         component: ExpensesChart
                     }
                 ]
+            },
+            {
+                path: "expense/:id",
+                name: "expenseDetail",
+                component: ExpensesDetail
             }
         ],
         beforeEnter(to, from, next) {

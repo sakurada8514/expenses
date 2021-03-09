@@ -60,8 +60,10 @@ const actions = {
             .catch(err => err.response || err);
 
         if (response.status === OK) {
+            const roomName = response.data.roomName || null;
             context.commit("setApiStatus", true);
             context.commit("setUser", response.data.user);
+            context.commit("setRoomName", roomName);
             return;
         }
 

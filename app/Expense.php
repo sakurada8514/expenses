@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Expense extends Model
 {
@@ -14,4 +15,9 @@ class Expense extends Model
         self::CREATED_AT,
         self::UPDATED_AT,
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\ExpenseCategory');
+    }
 }

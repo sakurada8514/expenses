@@ -13,6 +13,7 @@ class ExpenseCategory extends Model
     protected $hidden = [
         self::CREATED_AT,
         self::UPDATED_AT,
+        'room_id'
     ];
 
     public function getName()

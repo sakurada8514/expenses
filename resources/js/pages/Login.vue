@@ -46,11 +46,16 @@ export default {
         async login() {
             await this.$store.dispatch("auth/login", this.loginFormData);
             if (this.apiStatus) {
+                const roomName = this.$store.getters["auth/roomName"];
+                if (roomName) {
+                    this.$router.push(`/${roomName}`);
+                }
+
                 this.$router.push("/room.create");
             }
         },
         errorCrear() {
-            this.$store.commit("auth/setLoginErrorMessage",null);
+            this.$store.commit("auth/setLoginErrorMessage", null);
         }
     },
     created() {
